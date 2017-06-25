@@ -1,0 +1,2 @@
+export const UPDATE_TEXT = 'UPDATE_TEXT';
+export const UPDATE_RESULTS ='UPDATE_RESULTS';
