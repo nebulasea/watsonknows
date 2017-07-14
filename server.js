@@ -33,9 +33,9 @@ const mongoConnection = process.env.MONGODB_URI;
 const db = mongoose.connection;
 
 var connection;
-if (process.env.MONGODB_URI){
+if (mongoConnection){
     // this executes if this is being executed in heroku app
-    connection = mongoose.createConnection(MONGODB_URI);
+    connection = mongoose.createConnection(mongoConnection);
 } else {
    /// this executes if this is being executed on local machine
     connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
