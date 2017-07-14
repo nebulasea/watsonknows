@@ -24,6 +24,7 @@ export default class Welcome extends Component {
     this
       .props
       .dispatch(action)
+
   }
   render() {
     return (
@@ -39,7 +40,8 @@ export default class Welcome extends Component {
         <Row>
           <Col md={12}>
             {/* <div>{JSON.stringify(this.props.results)}</div> */}
-            <Graph data={this.props.results} />
+            <Graph data={this.props.results.currentMood} />
+            <Graph data={this.props.results.totalMood} />
 
           </Col>
         </Row>
