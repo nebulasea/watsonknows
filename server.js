@@ -32,8 +32,17 @@ const config = {
 const mongoConnection = process.env.MONGODB_URI;
 const db = mongoose.connection;
 
-var connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
-console.log("Connection Successful");
+var connection;
+if (process.env.MONGODB_URI){
+    // this executes if this is being executed in heroku app
+    connection = mongoose.createConnection(MONGODB_URI);
+} else {
+   /// this executes if this is being executed on local machine
+    connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
+}
+
+// var connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
+// console.log("Connection Successful");
 
 const Schema = mongoose.Schema;
 var schema = new mongoose.Schema({moods:'string', text:'string'});
