@@ -4,15 +4,19 @@ module.exports = {
     filename: "public/bundle.js"
   },
   module: {
-    loaders: [{
-      test: /\.js?$/,
-      include: /src/,
-      loader: "babel-loader",
-      query: {
-        presets: ["react", "es2015", "stage-0"],
-        plugins: ["transform-decorators-legacy"]
+    loaders: [
+      {
+        test: /\.js?$/,
+        include: /src/,
+        loader: "babel-loader",
+        query: {
+          presets: [
+            "react", "es2015", "stage-0"
+          ],
+          plugins: ["transform-decorators-legacy", "recharts"]
+        }
       }
-    }]
+    ]
   },
   devtool: "inline-source-map"
 };
