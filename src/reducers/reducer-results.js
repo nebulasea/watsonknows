@@ -8,7 +8,7 @@ const initialState = {
     }, {
       name: 'Anger',
       score: 40,
-      fill: '#E91E63'
+      fill: '#D81B60'
     }, {
       name: 'Joy',
       score: 60,
@@ -16,7 +16,7 @@ const initialState = {
     }, {
       name: 'Fear',
       score: 80,
-      fill: '#64DD17'
+      fill: '#AEEA00'
     }, {
       name: 'Sadness',
       score: 100,
@@ -31,7 +31,7 @@ const initialState = {
     }, {
       name: 'Anger',
       score: 80,
-      fill: '#E91E63'
+      fill: '#D81B60'
     }, {
       name: 'Joy',
       score: 60,
@@ -39,7 +39,7 @@ const initialState = {
     }, {
       name: 'Fear',
       score: 40,
-      fill: '#64DD17'
+      fill: '#AEEA00'
     }, {
       name: 'Sadness',
       score: 20,

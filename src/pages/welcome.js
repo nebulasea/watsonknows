@@ -48,7 +48,7 @@ export default class Welcome extends Component {
           <Col md={6}>
             <div id="two">
 
-              <h3>Cumulative</h3>
+              <h3>Cumulative Score</h3>
               <Graph data={this.props.results.totalMood}/>
 
             </div>
