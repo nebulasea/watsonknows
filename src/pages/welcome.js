@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import {Row, Col} from 'react-grid-system'
 import Search from './search'
-import Gallery from './gallery'
 import {connect} from 'react-redux'
 import {updateText} from '../actions/action-text.js'
 import {updateResults} from '../actions/action-results.js'
@@ -28,7 +27,7 @@ export default class Welcome extends Component {
   }
   render() {
     return (
-      <div>
+      <div id="reactcomp">
         <Row>
           <Col md={12}>
             <Search
@@ -37,12 +36,22 @@ export default class Welcome extends Component {
               handleSearch={this.handleSearch}/>
           </Col>
         </Row>
+        <br/>
         <Row>
-          <Col md={12}>
-            {/* <div>{JSON.stringify(this.props.results)}</div> */}
-            <Graph data={this.props.results.currentMood} />
-            <Graph data={this.props.results.totalMood} />
+          <Col md={6}>
+            <div id="one">
+              <h3>Current Sentence</h3>
+              <Graph data={this.props.results.currentMood}/>
 
+            </div>
+          </Col>
+          <Col md={6}>
+            <div id="two">
+
+              <h3>Cumulative</h3>
+              <Graph data={this.props.results.totalMood}/>
+
+            </div>
           </Col>
         </Row>
       </div>

@@ -1,4 +1,3 @@
-
 const express = require(`express`);
 const path = require(`path`);
 const watson = require('watson-developer-cloud/tone-analyzer/v3');
@@ -19,148 +18,143 @@ app.use(bodyParser.json({type: "application/vnd.api+json"}));
 
 //Firebase Config
 const config = {
-    apiKey: "AIzaSyA_PNb0-y-MD5-lrnxGctMWqDAzjlc2iH8",
-    authDomain: "watson-7888b.firebaseapp.com",
-    databaseURL: "https://watson-7888b.firebaseio.com",
-    projectId: "watson-7888b",
-    storageBucket: "watson-7888b.appspot.com",
-    messagingSenderId: "836327892399"
-  };
-  firebase.initializeApp(config);
+  apiKey: "AIzaSyA_PNb0-y-MD5-lrnxGctMWqDAzjlc2iH8",
+  authDomain: "watson-7888b.firebaseapp.com",
+  databaseURL: "https://watson-7888b.firebaseio.com",
+  projectId: "watson-7888b",
+  storageBucket: "watson-7888b.appspot.com",
+  messagingSenderId: "836327892399"
+};
+firebase.initializeApp(config);
 
-  //MongoDB config
+//MongoDB config
 const mongoConnection = process.env.MONGODB_URI;
 const db = mongoose.connection;
 
 var connection;
-if (mongoConnection){
-    // this executes if this is being executed in heroku app
-    connection = mongoose.createConnection(mongoConnection);
+if (mongoConnection) {
+  // this executes if this is being executed in heroku app
+  connection = mongoose.createConnection(mongoConnection);
 } else {
-   /// this executes if this is being executed on local machine
-    connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
+  /// this executes if this is being executed on local machine
+  connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
 }
 
-// var connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
+// var connection =
+// mongoose.createConnection('mongodb://localhost:27017/reactredux');
 // console.log("Connection Successful");
 
 const Schema = mongoose.Schema;
-var schema = new mongoose.Schema({moods:'string', text:'string'});
+var schema = new mongoose.Schema({moods: 'string', text: 'string'});
 var Mood = connection.model('Mood', schema);
 
-
-function saveToDB(res, currentMoods, moodObject){
+function saveToDB(res, currentMoods, moodObject) {
   console.log("made it here");
   Mood.create(moodObject, function (err, mood) {
-    if (err) throw(err);
+    if (err) 
+      throw(err);
     console.log('mood saved');
     getTotal(res, currentMoods)
   })
 }
 
-
-function getTotal(res, currentMood){
-     var counts = { 
+function getTotal(res, currentMood) {
+  var counts = {
     "Anger": 0,
     "Joy": 0,
     "Sadness": 0,
     "Fear": 0,
     "Disgust": 0
-    };
-    Mood.find({}, function(err,data){
-      if (err) throw err;
-
-      data.forEach(function(row){
+  };
+  Mood.find({}, function (err, data) {
+    if (err) 
+      throw err;
+    
+    data
+      .forEach(function (row) {
         console.log(row);
-        JSON.parse(row.moods).forEach(function(eachMood){
-          console.log(eachMood);
-          switch (eachMood.mood){
-          case "Anger":
-          console.log('made it to anger')
-            counts["Anger"] = counts["Anger"] + parseFloat(eachMood.score);
-            break;
-          case "Disgust":
-            counts["Disgust"] = counts["Disgust"] + parseFloat(eachMood.score);
-            break;
-          case "Sadness":
-            counts["Sadness"] = counts["Sadness"] + parseFloat(eachMood.score);
-            break;
-          case "Joy":
-            counts["Joy"] = counts["Joy"] + parseFloat(eachMood.score);
-            break;
-          case "Fear":
-            counts["Fear"] = counts["Fear"] + parseFloat(eachMood.score);
-            break;
-          
-          }
-        })
-      })
-      console.log(counts);
+        JSON
+          .parse(row.moods)
+          .forEach(function (eachMood) {
+            console.log(eachMood);
+            switch (eachMood.mood) {
+              case "Anger":
+                console.log('made it to anger');
+                counts["Anger"] = counts["Anger"] + parseFloat(eachMood.score);
+                break;
+              case "Disgust":
+                counts["Disgust"] = counts["Disgust"] + parseFloat(eachMood.score);
+                break;
+              case "Sadness":
+                counts["Sadness"] = counts["Sadness"] + parseFloat(eachMood.score);
+                break;
+              case "Joy":
+                counts["Joy"] = counts["Joy"] + parseFloat(eachMood.score);
+                break;
+              case "Fear":
+                counts["Fear"] = counts["Fear"] + parseFloat(eachMood.score);
+                break;
 
-      var totalMood = [];
-      let colors = ['#8884d8','#83a6ed','#8dd1e1', '#82ca9d', '#a4de6c' ];
-      let emotions = Object.keys(counts);
-      for(i=0; i<5; i++){
-          let name = emotions[i];
-          let score = counts[name].toFixed(2);
-          console.log('counts', counts[name]);
-        totalMood.push({
-            name: `${name}: ${score}%`,
-          score: score,
-          fill: colors[i]
-        })
-      }
+            }
+          })
+      })
+    console.log(counts);
+
+    var totalMood = [];
+    let colors = ['#FF9100', '#F50057', '#FFF176', '#00C853', '#7C4DFF'];
+    let emotions = Object.keys(counts);
+    for (i = 0; i < 5; i++) {
+      let name = emotions[i];
+      let score = counts[name].toFixed(2);
+      console.log('counts', counts[name]);
+      totalMood.push({name: `${name}: ${score}`, score: score, fill: colors[i]})
+    }
     res.json({totalMood: totalMood, currentMood: currentMood});
-    })
+  })
 }
 
+app
+  .get('/api/tone', function (req, res) {
 
-app.get('/api/tone', function(req, res){
+    getTotal(res);
 
-  getTotal(res);
-
-})
-
+  })
 
 // Routes
 app.get(`*`, function (req, res) {
-  res.sendFile('public/index.html', { root: __dirname });
+  res.sendFile('public/index.html', {root: __dirname});
 });
 
-app.post('/api/tone', function(req,res){
+app.post('/api/tone', function (req, res) {
   console.log(req.body)
-  var tone_analyzer =  new watson({
-    username: '56d8b15e-1a56-474c-843a-5e6f990ca58d',
-    password: 'ICD0LAebSlJG',
-    version_date: '2016-05-19',
-  });
+  var tone_analyzer = new watson({username: '56d8b15e-1a56-474c-843a-5e6f990ca58d', password: 'ICD0LAebSlJG', version_date: '2016-05-19'});
 
-  tone_analyzer.tone(req.body, function(err, tone) {
-    if (err)
+  tone_analyzer.tone(req.body, function (err, tone) {
+    if (err) 
       console.log(err);
     else {
-      
-      let colors = ['#8884d8','#83a6ed','#8dd1e1', '#82ca9d', '#a4de6c' ];
+
+      let colors = ['#FF9100', '#F50057', '#FFF176', '#00C853', '#7C4DFF'];
       let data = tone.document_tone.tone_categories[0].tones;
-      let moods = data.map(function(mood, index){
-        let score = (mood.score*100.0).toFixed(2);
+      let moods = data.map(function (mood, index) {
+        let score = (mood.score * 100.0).toFixed(2);
 
         let scoreObj = {
-            mood: mood.tone_name,
-            name: `${mood.tone_name}: ${score}%`,
-            score: score,
-            fill: colors[index]
-            }
+          mood: mood.tone_name,
+          name: `${mood.tone_name}: ${score}`,
+          score: score,
+          fill: colors[index]
+        }
         return scoreObj
       })
 
-      saveToDB(
-        res, 
-        moods,
-        Object.assign({moods:JSON.stringify(moods)}, {text:JSON.stringify(req.body)})
-      )
+      saveToDB(res, moods, Object.assign({
+        moods: JSON.stringify(moods)
+      }, {
+        text: JSON.stringify(req.body)
+      }))
       // res.json(moods);
-} 
+    }
   });
 });
 

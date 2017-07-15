@@ -1,0 +1,23 @@
+@font-face{
+  font-family: 'moon';
+  src: url('./moon.otf')
+  format('opentype');
+
+}
+body{
+  font-family: 'moon';
+  margin:0;
+  background-color: #424242;
+  color: #FFFFFF;
+  text-align: center;
+}
+ h3{
+  color:#00e5FF
+}
+#app{
+  font-family: 'moon';
+  color:white;
+  margin: 0;
+max-width: 100%;
+display:-ms-inline-grid
+}
