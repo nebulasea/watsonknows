@@ -101,7 +101,7 @@ function getTotal(res, currentMood) {
     console.log(counts);
 
     var totalMood = [];
-    let colors = ['#FF9100', '#F50057', '#FFF176', '#00C853', '#7C4DFF'];
+    let colors = ['#FF9100', '#E91E63', '#FFF176', '#64DD17', '#7C4DFF'];
     let emotions = Object.keys(counts);
     for (i = 0; i < 5; i++) {
       let name = emotions[i];
@@ -134,7 +134,7 @@ app.post('/api/tone', function (req, res) {
       console.log(err);
     else {
 
-      let colors = ['#FF9100', '#F50057', '#FFF176', '#00C853', '#7C4DFF'];
+      let colors = ['#FF9100', '#E91E63', '#FFF176', '#64DD17', '#7C4DFF'];
       let data = tone.document_tone.tone_categories[0].tones;
       let moods = data.map(function (mood, index) {
         let score = (mood.score * 100.0).toFixed(2);
