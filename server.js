@@ -38,6 +38,7 @@ if (mongoConnection) {
 } else {
   /// this executes if this is being executed on local machine
   connection = mongoose.createConnection('mongodb://localhost:27017/reactredux');
+  connection = mongoose.createConnection('mongodb://localhost:27017/watsonknows');
 }
 
 // var connection =
