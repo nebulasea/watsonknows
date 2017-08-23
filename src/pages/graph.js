@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 const style = {
   lineHeight: '20px',
   fontFamily: 'moon',
-  textAligm: 'center'
+  textAlign: 'center'
 };
 
 export default(props) => {
@@ -19,31 +19,34 @@ export default(props) => {
     })
   return (
     <div>
-      <Paper height={500} width={450} zDepth={4}>
-        <ResponsiveContainer width="100%" height={500}>
-          <Col md={12}>
-            <RadialBarChart
-              width={500}
-              height={500}
-              cy='30%'
-              innerRadius={40}
-              outerRadius={150}
-              barSize={10}
-              data={data}>
-              <RadialBar minAngle={15} background clockWise={true} dataKey='score'/>
-              <Legend
-                iconSize={10}
-                width={300}
-                height={170}
-                layout='vertical'
-                verticalAlign='bottom'
-                iconType='circle'
-                wrapperStyle={style}/>
-            </RadialBarChart>
-          </Col>
-        </ResponsiveContainer>
-      </Paper>
+      <Row>
+        <Col md={12}>
+          <Paper height={500} width={450} zDepth={4}>
+            <ResponsiveContainer width="100%" height={500}>
 
+              <RadialBarChart
+                width={500}
+                height={500}
+                cy='30%'
+                innerRadius={40}
+                outerRadius={150}
+                barSize={10}
+                data={data}>
+                <RadialBar minAngle={15} background clockWise={true} dataKey='score'/>
+                <Legend
+                  iconSize={10}
+                  width={300}
+                  height={170}
+                  layout='vertical'
+                  verticalAlign='bottom'
+                  iconType='circle'
+                  wrapperStyle={style}/>
+              </RadialBarChart>
+
+            </ResponsiveContainer>
+          </Paper>
+        </Col>
+      </Row>
     </div>
   )
 }
